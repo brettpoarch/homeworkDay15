@@ -1,12 +1,14 @@
 import React from 'react'
 import './App.css'
-//import './remove.js'
+
 
 export default React.createClass({
   getInitialState: function(){
     return{
       task: '',
-      list: []
+      list: [],
+      idTag: 0
+
     }
   },
 
@@ -20,7 +22,8 @@ export default React.createClass({
     e.preventDefault()
     this.setState({
       list: [this.state.task, ...this.state.list],
-      task: ''
+      task: '',
+      idTag: this.state.id + 1
     })
   },
 
@@ -28,7 +31,6 @@ export default React.createClass({
     this.setState({
       list: this.state.list.filter(function(value) { 
         return value !== e.target.value 
-
       })
     })
   },
@@ -40,8 +42,8 @@ export default React.createClass({
           <input type='text' className='inputBox'placeholder='What needs to be done?' value={this.state.task} onChange={this.handleChange}></input>
         </form>
         <ul>
-          {this.state.list.map(function(list){
-            return <li><input type='checkbox' /*onCheck={this.handleCheck}*/ />{list}<button value={list} onClick={this.handleClick}>X</button></li>
+          {this.state.list.map(function(list, idTag){
+            return <li key={'id' + idTag}><input type='checkbox' id={'id' + idTag} /><label htmlFor={'id' + idTag}>{list}</label><button value={list} onClick={this.handleClick}>X</button></li>
           }.bind(this))}
         </ul>
       </div>
